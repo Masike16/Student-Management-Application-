@@ -70,7 +70,7 @@ class StudentDatabase {
     }
 
     public void printStudentReport() {
-        for (Student student : students) {// calls previous reports of all add Students
+        for (Student student : students) {
             System.out.println("Student ID: " + student.getId());
             System.out.println("Name: " + student.getName());
             System.out.println("Age: " + student.getAge());
@@ -137,7 +137,7 @@ public class SMAppJava {
 
         int choice = scanner.nextInt();
 
-        switch (choice) {//Choices to be made for user in put here
+        switch (choice) {
             case 1:
                 addStudent();
                 break;
@@ -173,20 +173,20 @@ public class SMAppJava {
     System.out.println("Enter student's name:");
     String name = scanner.next().trim(); 
 
-    int age;
-        while (true) {
-            System.out.println("Enter student's age:");
-            if (scanner.hasNextInt()) {
-                age = scanner.nextInt();
-                if (age >= 17) {// age limit must not be below age of 17
-                    break;
-                } else {
-                    System.out.println("You have entered an incorrect student age!!! Please re-enter the student");
-                }
+    int age;// ensure numerical variable is inputted
+    while (true) {
+        System.out.println("Enter student's age:");
+        if (scanner.hasNextInt()) {
+            age = scanner.nextInt();
+            if (age >= 17) {// ages must be equal or above age limit
+                break;
             } else {
-                System.out.println("Invalid input. Please enter a valid age.");
-                scanner.next(); // Clear invalid input
+                System.out.println("You have entered an incorrect student age!!! Please re-enter the student");// ensures users corrects their input variables
             }
+        } else {
+            System.out.println("Invalid input. Please enter a valid age.");
+            scanner.next(); // Clear invalid input
+        }
     }
 
     System.out.println("Enter student's email:");
@@ -203,7 +203,7 @@ public class SMAppJava {
     System.out.println("Enter student's course:");
     String course = scanner.next().trim();
 
-    Student student = new Student(studentId, name, age, email, course);//display end result to for user satisfaction
+    Student student = new Student(studentId, name, age, email, course);
     database.addStudent(student);
 
     System.out.println("Student added successfully!");
@@ -222,21 +222,21 @@ public class SMAppJava {
     }
 }
 
-    private static void searchStudent() {//searches for Student via ID inputted
+    private static void searchStudent() {
     System.out.println("Enter student's ID to search:");
-        String studentId = scanner.next().trim();
+    String studentId = scanner.next().trim();
 
-        Student student = database.searchStudent(studentId);
+    Student student = database.searchStudent(studentId);
 
-        if (student != null) {
-            System.out.println("Student ID: " + student.getId());
-            System.out.println("Name: " + student.getName());
-            System.out.println("Age: " + student.getAge());
-            System.out.println("Email: " + student.getEmail());
-            System.out.println("Course: " + student.getCourse());
-        } else {
-            System.out.println("Student with Student Id: " + studentId + " was not found!");
-        }
+    if (student!= null) {
+        System.out.println("Student ID: " + student.getId());
+        System.out.println("Name: " + student.getName());
+        System.out.println("Age: " + student.getAge());
+        System.out.println("Email: " + student.getEmail());
+        System.out.println("Course: " + student.getCourse());
+    } else {
+        System.out.println("Student with Student Id: " + studentId + " was not found!");
+    }
 
     System.out.println("Enter (1) to launch menu or any other key to exit.");
     int choice = scanner.nextInt();
@@ -249,15 +249,14 @@ public class SMAppJava {
 
     private static void deleteStudent() {
     System.out.println("Enter student's ID to delete:");
-        String studentId = scanner.next().trim();
+    String studentId = scanner.next().trim();
 
-        Student student = database.searchStudent(studentId);
-        if (student != null) {
-            database.deleteStudent(studentId);
-            System.out.println("Student with Id " + studentId + " was deleted!");
-        } else {
-            System.out.println("Student with Id " + studentId + " was not found!");
-        }
+    if (database.searchStudent(studentId) != null) {// searches database for any student numbers
+        database.deleteStudent(studentId);
+        System.out.println("Student with Id " + studentId + " was deleted!");
+    } else {
+        System.out.println("Student with Id " + studentId + " was not found!");
+    }
 
     System.out.println("Enter (1) to launch menu or any other key to exit.");
     int choice = scanner.nextInt();
@@ -289,8 +288,10 @@ public class SMAppJava {
         System.out.println("Exiting application. Goodbye!");
     }
 }
+
+    Scanner getScanner() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }
 //Gots to add code for exptional handling left
-//Code still excepts input for Course input normally
-// Difficulty in using code for Junit testing
